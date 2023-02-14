@@ -10,34 +10,32 @@
  * governing permissions and limitations under the License.
  */
 
-import {
-  setLibs,
-  unwrapSingularFragments,
-  decorateButtons,
-  turnH6intoDetailM,
-  customSpacings,
-  externalLinks,
-  gnavUnderline,
-  handleAnchors,
-} from './utils.js';
+import { setLibs } from './utils.js';
 
+// Add project-wide style path here.
+const STYLES = '';
+
+// Use '/libs' if your live site maps '/libs' to milo's origin.
 const LIBS = 'https://milo.adobe.com/libs';
-const STYLES = '/pages/styles/styles.css';
+
+// Add any config options.
 const CONFIG = {
+  // codeRoot: '',
+  // contentRoot: '',
   imsClientId: 'stockpoc',
-  // contentRoot: '/pages',
-  // codeRoot: '/pages',
+  // geoRouting: 'off',
+  // fallbackRouting: 'off',
   locales: {
     '': { ietf: 'en-US', tk: 'hah7vzn.css' },
-    br: { ietf: 'pt-BR', tk: 'inq1xob.css' },
-    es: { ietf: 'es-ES', tk: 'oln4yqj.css' },
-    jp: { ietf: 'ja-JP', tk: 'dvg6awq' },
+    de: { ietf: 'de-DE', tk: 'hah7vzn.css' },
+    kr: { ietf: 'ko-KR', tk: 'zfo3ouc' },
   },
 };
 
+// Load LCP image immediately
 (async function loadLCPImage() {
   const lcpImg = document.querySelector('img');
-  lcpImg?.setAttribute('loading', 'eager');
+  lcpImg?.removeAttribute('loading');
 }());
 
 /*
@@ -59,17 +57,10 @@ const miloLibs = setLibs(LIBS);
   });
 }());
 
-const { loadArea, loadDelayed, setConfig } = await import(`${miloLibs}/utils/utils.js`);
-
 (async function loadPage() {
+  const { loadArea, loadDelayed, setConfig } = await import(`${miloLibs}/utils/utils.js`);
+
   setConfig({ ...CONFIG, miloLibs });
-  decorateButtons();
-  turnH6intoDetailM();
   await loadArea();
-  unwrapSingularFragments();
-  externalLinks();
-  customSpacings();
-  gnavUnderline();
-  handleAnchors();
   loadDelayed();
 }());
